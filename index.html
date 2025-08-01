@@ -690,5 +690,48 @@ git remote -v           # Remote repositories
   <script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
   <script src="//support.google.com/inapp/api.js"></script>
 
+  <script>
+    // Custom script to restart codelab when Done is clicked
+    document.addEventListener('DOMContentLoaded', function() {
+      const codelab = document.querySelector('google-codelab');
+      
+      if (codelab) {
+        codelab.addEventListener('google-codelab-step', function(e) {
+          // Check if this is the last step (Next Steps)
+          if (e.detail.index === codelab.steps.length - 1) {
+            // Add restart button to the final step
+            const finalStep = codelab.steps[codelab.steps.length - 1];
+            const restartButton = document.createElement('button');
+            restartButton.textContent = '🔄 Restart Codelab';
+            restartButton.style.cssText = `
+              background: #4F7DC9;
+              color: white;
+              border: none;
+              padding: 12px 24px;
+              border-radius: 4px;
+              font-size: 16px;
+              cursor: pointer;
+              margin-top: 20px;
+              display: block;
+            `;
+            
+            restartButton.addEventListener('click', function() {
+              // Reset codelab to first step
+              codelab.selected = 0;
+              // Scroll to top
+              window.scrollTo(0, 0);
+            });
+            
+            // Add button to the final step content
+            const stepContent = finalStep.querySelector('.codelab-step-content');
+            if (stepContent) {
+              stepContent.appendChild(restartButton);
+            }
+          }
+        });
+      }
+    });
+  </script>
+
 </body>
 </html>
