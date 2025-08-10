@@ -17,6 +17,9 @@
     .error {
       color: red;
     }
+     #done, #arrow-back {
+        display: none !important;
+      }
   </style>
 </head>
 <body>
@@ -620,7 +623,7 @@ git remote -v           # Remote repositories
 
       </google-codelab-step>
     
-      <google-codelab-step label="Next Steps" duration="2">
+      <google-codelab-step label="Next Steps" duration="2" id="final-step">
         <p>Congratulations! You&#39;ve learned the fundamentals of Git and GitHub. Here&#39;s what you can do next.</p>
 <h2 is-upgraded>Continue Learning</h2>
 <p><strong>Advanced Git topics:</strong></p>
@@ -680,6 +683,10 @@ git remote -v           # Remote repositories
 <p><strong>Happy coding! 🚀</strong></p>
 
 
+
+
+
+
       </google-codelab-step>
     
   </google-codelab>
@@ -691,45 +698,33 @@ git remote -v           # Remote repositories
   <script src="//support.google.com/inapp/api.js"></script>
 
   <script>
-    // Custom script to restart codelab when Done is clicked
+    // Completely hide the Done button
     document.addEventListener('DOMContentLoaded', function() {
-      const codelab = document.querySelector('google-codelab');
-      
-      if (codelab) {
-        codelab.addEventListener('google-codelab-step', function(e) {
-          // Check if this is the last step (Next Steps)
-          if (e.detail.index === codelab.steps.length - 1) {
-            // Add restart button to the final step
-            const finalStep = codelab.steps[codelab.steps.length - 1];
-            const restartButton = document.createElement('button');
-            restartButton.textContent = '🔄 Restart Codelab';
-            restartButton.style.cssText = `
-              background: #4F7DC9;
-              color: white;
-              border: none;
-              padding: 12px 24px;
-              border-radius: 4px;
-              font-size: 16px;
-              cursor: pointer;
-              margin-top: 20px;
-              display: block;
-            `;
-            
-            restartButton.addEventListener('click', function() {
-              // Reset codelab to first step
-              codelab.selected = 0;
-              // Scroll to top
-              window.scrollTo(0, 0);
-            });
-            
-            // Add button to the final step content
-            const stepContent = finalStep.querySelector('.codelab-step-content');
-            if (stepContent) {
-              stepContent.appendChild(restartButton);
-            }
+      // Function to hide Done button
+      function hideDoneButton() {
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(function(button) {
+          const text = button.textContent || button.innerText || '';
+          if (text.toLowerCase().includes('done') || text.toLowerCase().includes('finish')) {
+            // Completely hide the Done button
+            button.style.display = 'none';
+            button.style.visibility = 'hidden';
+            button.style.opacity = '0';
+            button.style.position = 'absolute';
+            button.style.left = '-9999px';
+            console.log('Done button completely hidden!');
           }
         });
       }
+      
+      // Hide immediately and keep checking
+      hideDoneButton();
+      setInterval(hideDoneButton, 500);
+      
+      // Also hide after a delay to catch any late-appearing buttons
+      setTimeout(hideDoneButton, 1000);
+      setTimeout(hideDoneButton, 2000);
+      setTimeout(hideDoneButton, 3000);
     });
   </script>
 
